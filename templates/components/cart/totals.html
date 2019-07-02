@@ -1,10 +1,10 @@
-<script
+<!-- <script
   id="bolt-connect"
   type="text/javascript"
   src="https://connect.bolt.com/connect-bigcommerce.js"
   data-publishable-key="3ximKwUWJJ6Q.SC4loucq5R6G.7c46996f8803dcf5a87ddc1ef5f9a9c866bbcb290f9c4ba450c92ef72081e578"
   data-shopping-cart-id="BigCommerce">
-</script>
+</script> -->
 
 <div class="cart-totals-column">
   {{> components/cart/coupon-codes}}
@@ -72,14 +72,13 @@
       {{lang 'cart.keep_shopping'}}
     </a> -->
    
-    <!-- <a class="button button-primary button-wide button-checkout" href="{{urls.checkout.single_address}}">
+    <a class="button button-primary button-wide button-checkout" href="{{urls.checkout.single_address}}">
       {{lang 'cart.checkout'}}
-    </a> -->
+    </a> 
 
-    <div class="bolt-button-wrapper" style="display: contents;">
-        <!--To change the theme color place the new hex color after --bolt-primary-action-color-->
+    <!-- <div class="bolt-button-wrapper" style="display: contents;">
       <div class="bolt-checkout-button large-width with-cards responsive bolt-multi-step-checkout" style="--bolt-primary-action-color:#6ea438"></div>
-    </div>
+    </div> -->
 
 
     {{#if cart.show_multiple_address_shipping}}
@@ -224,7 +223,7 @@
 }(document, window));
 </script>
 
-<script>
+<!-- <script>
     var originalCheckoutButton = document.querySelector(".cart-actions .button-primary");
     var boltButtons = document.getElementsByClassName("bolt-button-wrapper");
     
@@ -285,5 +284,5 @@
     };
     new MutationObserver(callback).observe(document.body, config);
     
-    </script>
+</script> -->
     
