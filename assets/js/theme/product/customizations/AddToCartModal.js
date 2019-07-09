@@ -27,7 +27,7 @@ export default class AddToCartModal {
 
     // Display cart modal on successful add to cart
     $(document).on('cart-item-add-success', () => {
-      // this._reconcile();
+      //this._reconcile();
     });
 
     // Close modal cart on click of 'X' or outside modal
@@ -40,18 +40,14 @@ export default class AddToCartModal {
     let $form = $(form);
     let formData = $form.serializeArray();
     let item = {options: []};
-
     for (var i in formData) {
       switch (formData[i].name) {
-        
         case 'product_id':
           item[formData[i].name] = formData[i].value;
           break;
-        
-          case 'qty':
+        case 'qty':
         case 'action':
           break; // Do nothing
-
         default:
           if (formData[i].name.match(/^attribute\[\d+\]$/)) {
             if (formData[i].value.match(/^\d+$/)) {
@@ -73,14 +69,7 @@ export default class AddToCartModal {
     }
 
     this.lastAddedProduct = item;
-
-    // wait until we get get a resonse that the cart is updated before we show the modal
-    // this is to avoid shwoing incorrect data
-    $(window).on("cartDataStored", () => {
-      this._update(this._display);
-      $('.modal-cart__summary .button-cart').removeClass('button-disabled').off('click.update-cart');
-    });
-    
+    this._update(this._display);
   }
 
   /**
@@ -91,7 +80,6 @@ export default class AddToCartModal {
     let qty = $(document).find('input[name="qty[]"]').val();
     let price = $(document).find('.product-quantity-submit [data-product-price-wrapper="without-tax"] .price-value').text().trim().replace(',', '').replace(/\$(\d+)\.(\d\d)/, "$1$2");
     let unitPrice = price/qty;
-    
     if (unitPrice < 10) {
       unitPrice = `00${unitPrice}`;
     } else if (unitPrice < 100) {
@@ -114,23 +102,24 @@ export default class AddToCartModal {
       e.preventDefault();
     });
 
+<<<<<<< HEAD
     // get product data from cart rather than calcualte from the UI
     let pendingCartTotal = window.localStorage.getItem('cartData');
     pendingCartTotal = JSON.parse(pendingCartTotal);
     pendingCartTotal = pendingCartTotal[0].cartAmount;
     
+=======
+    let pendingCartTotal = (Number.parseInt($('.modal-cart__subtotal-value').attr('data-value')) * 100);
+    pendingCartTotal += Number.parseInt(price);
+>>>>>>> parent of 09c87c4... 1.19.13
     if (pendingCartTotal < 10) {
       pendingCartTotal = `00${pendingCartTotal}`;
-
     } else if (pendingCartTotal < 100) {
       pendingCartTotal = `0${pendingCartTotal}`;
     }
+    pendingCartTotal = `$${pendingCartTotal}`.replace(/^(\$\d*)(\d\d)$/, "$1.$2").replace(/(\d)(\d\d\d)\./, "$1,$2.");
 
-    // pendingCartTotal = `$${pendingCartTotal}`.replace(/^(\$\d*)(\d\d)$/, "$1.$2").replace(/(\d)(\d\d\d)\./, "$1,$2.");
-    pendingCartTotal = `$${pendingCartTotal}.00`.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-
-    // let pendingCartQuantity = Number.parseInt($('.modal-cart__count-value').attr('data-quantity')) + Number.parseInt(qty);
-    let pendingCartQuantity = Number.parseInt($('.modal-cart__count-value').attr('data-quantity'));
+    let pendingCartQuantity = Number.parseInt($('.modal-cart__count-value').attr('data-quantity')) + Number.parseInt(qty);
 
     $('.modal-cart__subtotal-value').text(pendingCartTotal);
     $('.modal-cart__count-value').text(pendingCartQuantity);
@@ -138,7 +127,6 @@ export default class AddToCartModal {
 
 
     let config = this.getGlobalScriptConfig();
-
     if (config && config.marketing_content && config.marketing_content.add_to_cart_modal) {
       if (config.marketing_content.add_to_cart_modal.summary) {
         $('.modal-cart__marketing--summary').html(config.marketing_content.add_to_cart_modal.summary);
@@ -153,8 +141,6 @@ export default class AddToCartModal {
     }
   }
 
-
-
   /**
    * Update the (reconciled) cart modal contents
    */
@@ -167,17 +153,11 @@ export default class AddToCartModal {
 
       try {
         cartJson = JSON.parse(response.trim().split('\n')[0].trim());
-
-        // update our cart model data for other apps and UI
-        utils.api.cart.getCart({includeOptions: true}, (err, response) => {
-          window.TEAK.Modules.saveCartResponse(response);
-        });
-        
       } catch (e) {
         cartJson = {};
       }
 
-      // $('.modal-cart__subtotal-value').text(cartJson.grand_total.formatted).attr('data-value', cartJson.grand_total.value);
+      $('.modal-cart__subtotal-value').text(cartJson.grand_total.formatted).attr('data-value', cartJson.grand_total.value);
       $('.modal-cart__count-value').text(cartJson.quantity).attr('data-quantity', cartJson.quantity);
       $('.modal-cart__count-unit').text(cartJson.quantity === 1 ? ' item' : ' items');
       //$('.modal-cart__summary').removeClass('is-loading');
@@ -186,7 +166,6 @@ export default class AddToCartModal {
       if (cartJson.additional_checkout_buttons.length == 1) {
         let $additionalCheckoutWrapper = $('.modal-cart__additional-checkout-buttons');
         $additionalCheckoutWrapper.html('');
-
         for (var i in cartJson.additional_checkout_buttons) {
           $additionalCheckoutWrapper.append(
             $('<span></span>').html(cartJson.additional_checkout_buttons[i])

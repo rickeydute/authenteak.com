@@ -30,7 +30,7 @@ export default class GlobalCustomizations {
 
   // Complete mega menu DOM created by handlebars
   prepareMegaMenus() {
-    window.TEAK = window.TEAK || {};
+    window.authenteak = window.authenteak || {};
 
     // Add DoubleTapToGo element bindings
     $('.navigation ul li.hover-dropdown.mega-nav').doubleTapToGo();
@@ -197,7 +197,7 @@ export default class GlobalCustomizations {
 
   // Complete mobile menu DOM created by handlebars
   prepareMobileMenu() {
-    window.TEAK = window.TEAK || {};
+    window.authenteak = window.authenteak || {};
 
     let config = this.getGlobalScriptConfig();
 

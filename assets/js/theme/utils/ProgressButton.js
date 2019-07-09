@@ -34,5 +34,4 @@ export default class ProgressButton {
       .next('.icon-spinner')
       .remove();
   }
-
 }

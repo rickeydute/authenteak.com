@@ -1,5 +1,6 @@
 # Change Log
 
+<<<<<<< HEAD
 ## [1.19.14] - 2019-07-02
 #### Fixed
 - Circle swatches
@@ -19,6 +20,8 @@
 - Reverted Bolt Checktou button
 
 
+=======
+>>>>>>> parent of 09c87c4... 1.19.13
 ## [1.19.11.002] - 2019-06-19
 #### Fixed
 - issue with price being in the incorrect place
