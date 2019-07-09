@@ -1,9 +1,7 @@
 # Change Log
 
-## [1.19.14] - 2019-07-02
-#### Fixed
-- Circle swatches
-- ATC fix for free product swatches flicker
+## [1.19.13.001] - 2019-07-09
+- ATC price flicker hotfix
 
 ## [1.19.13] - 2019-06-28
 #### Fixed
