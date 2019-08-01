@@ -19,9 +19,10 @@
 
     <div class="product-details-column">
       <h1 class="product-title mobileShow">{{this.product.title}}</h1>
-      <p class="item-number mobileShow">ITEM #: {{product.sku}}</p>
+      <p class="item-number item-number-mobile mobileShow">ITEM #: {{product.sku}}</p>
 
       {{> components/products/customizations/swatch-hover-detail}}
+
       {{> components/products/product-single-images
         images=product.images
         default_image=theme_settings.default_image
@@ -61,12 +62,14 @@
       {{else}}
         <h1 class="product-title mobileHide">{{this.product.title}}</h1>
       {{/if}}
-        <p class="item-number mobileHide">ITEM #: {{product.sku}}</p>
-
-      <div class="yotpo-pdp-wrapper">
-          <div class="yotpo bottomLine" data-product-id="{{ product.id }}"></div>  
-          <div class='yotpo QABottomLine' data-appkey='aS8rMIONwGgNbx1ATQmUtKY173Xk5HHc75qGrnuq' data-product-id='{{ product.id }}'></div>
-      </div>
+      
+        <div class="item-number">
+          <span class="mobileHide">ITEM #: {{product.sku}}</span>
+          <span class="yotpo-pdp-wrapper">
+              <span class="yotpo bottomLine" data-product-id="{{ product.id }}"></span>  
+              <span class='yotpo QABottomLine' data-appkey='aS8rMIONwGgNbx1ATQmUtKY173Xk5HHc75qGrnuq' data-product-id='{{ product.id }}'></span>
+          </span>
+        </div>
       
 
       <div class="price-range">
@@ -78,6 +81,8 @@
             <!-- show no price -->
           {{/if}}
       </div>
+
+      <div class="affirm-pdp"></div>      
 
       <!-- moved to add-to-cart.html -->
       <!-- <div class="product-price">
@@ -103,19 +108,23 @@
         {{/if}}
       </div>
 
-      {{#each product.custom_fields}}
-        {{#if this.name '==' "Promo Text"}}
-            <p class="pdp-promo-text">{{{this.value}}}</p>
-        {{/if}}
-      {{/each}}
-
       {{#if product.release_date }}
         <p class="message neutral">{{product.release_date}}</p>
       {{/if}}
       
+
+      {{#if product.options}}
+        {{#each product.custom_fields}}
+          {{#if this.name '==' "Lead-Time"}}   
+              <p class="shipping-range shipping-range--static mobileHide">{{this.value}}</p>
+          {{/if}}
+        {{/each}}
+      {{/if}}
+
+      
       {{#each product.custom_fields}}
-        {{#if this.name '==' "Lead-Time"}}   
-            <p class="shipping-range shipping-range--static mobileHide">{{this.value}}</p>
+        {{#if this.name '==' "Promo Text"}}
+            <p class="pdp-promo-text">{{{this.value}}}</p>
         {{/if}}
       {{/each}}
 
@@ -158,6 +167,10 @@
           {{{product.warranty}}}
       </div>
 
+      <div id="returnTab">
+          
+      </div>
+
       <div id="videoTab">
         {{#if product.videos.list.length}}
         <div class="tab-content-panel" id="product-videos">
@@ -182,6 +195,7 @@
           <li><a data-tabval="pdfTab" class="pdfBtn">Resources</a></li>
           <li><a data-tabval="videoTab" class="videoBtn">{{lang 'product.videos'}}</a></li>
           <li><a data-tabval="warrantyTab" class="warrantyTab">Warranty</a></li>
+          <li><a data-tabval="returnTab" class="returnTab">Return Policy</a></li>
         </ul>
       </div>
       <div class="tab-content"></div>
@@ -209,6 +223,9 @@
     
     <a class="mobile-tab-heading mobile-warratyTab" data-tabVal="warrantyTab">Warranty</a>
     <div class="warrantyContent"></div>
+
+    <a class="mobile-tab-heading mobile-returnTab" data-tabVal="returnTab">Return Policy</a>
+    <div class="returnContent"></div>
   </div>
 </section>
 
@@ -264,6 +281,13 @@
             tabBtnClass: ".warrantyBtn",
             mobileClass: ".mobile-warrantyTab",
             mobileObj: document.querySelector('.warrantyContent')
+          },
+          {
+            type: document.querySelector('#returnTab'),
+            id: "returnTab",
+            tabBtnClass: ".returnBtn",
+            mobileClass: ".mobile-returnTab",
+            mobileObj: document.querySelector('.returnContent')
           }
         ];
 

@@ -1,25 +1,61 @@
 # Change Log
 
-## [1.19.10] - 2019-05-13
-#### Changed
-- Merged Bolt checkout
-- Made a few ui updates
+## [1.20.0] - 2019-07-23
+#### Enhanced
+- New Dynamic Enhanced Mega Menu (all devices)
+- Add dot nav to product recom slider for mobile
+- add scroll bar for swatches
+- add alt text to swatches
 
-## [1.19.9] - 2019-05-09
-#### Changed
-- Merged Bolt checkout files with new checkout integration
 
-## [1.19.8] - 2019-05-03
+## [1.19.14] - 2019-07-10
 #### Fixed
-- Fixed an issue with ATC Modal where the incorrect keyboard is triggered due to text type as a input type instead of number
-- Fixed $NaN from appearing in ATC Modal
-#### Changed
-- Added new redesign cart page
+- Circle swatches
+- full width site, header, plp and pip
+- ATC fix for free product swatches flicker
+- ALT tags for flyout menu (mobile & desktop)
+- swatch fix on click to keep label
+- ATC modal to reflect free swatch
+- added back pdp div for affirm
+- fix ui issues for inline swatch and yopto
+- added correct alt tag words for flouts
+
+## [1.19.13] - 2019-06-28
+#### Fixed
+- PDP changes
+- Bolt checkout
+- AFfirm
+- Price flicker
+- localstorage cart data save
+- ATC
+
+## [1.19.12] - 2019-06-19
+#### Fixed
+- Reverted Bolt Checktou button
+
+
+## [1.19.11.002] - 2019-06-19
+#### Fixed
+- issue with price being in the incorrect place
+
+
+## [1.19.11] - 2019-06-18
+#### Fixed
+- Pixel tracking
+- Prop 65 on cart
+- Mega menu update
+- Search box
+- SEO structured data fix
+- PDP product sizes recomendation slider
+- removed the product price from recomendation slider
+
 
 
 ## [1.19.7] - 2019-04-18
 #### Fixed
 - Fixed an issue with the scroll not working on the swatch order modal when swatches are selected.
+
+- Rolled back version 1.19.7 from 1.19.10
 
 
 ## [1.19.6] - 2019-04-17

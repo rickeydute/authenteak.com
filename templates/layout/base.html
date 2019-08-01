@@ -1,91 +1,105 @@
 <!DOCTYPE html>
-<html class="no-js" lang="{{ locale_name }}">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>{{ chop head.title }}</title>
-    {{{ head.meta_tags }}}
-    {{{ head.config }}}
-    {{#block "head"}} {{/block}}
-    <link href="{{ head.favicon }}" rel="shortcut icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="{{cdn '/assets/js/modernizr.js'}}"></script>
-    <script> window.History = {options: {delayInit: true} }; </script>
+<html class="no-js" lang="{{ locale_name }}" base-html>
 
-    {{{stylesheet '/assets/css/theme.css'}}}
-    {{ getFontsCollection }}
+<head>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    {{{head.scripts}}}
-    {{{head.rsslinks}}}
+<title>{{ chop head.title }}</title>
+{{{ head.meta_tags }}}
+{{{ head.config }}}
+{{#block "head"}} {{/block}}
+<link href="{{ head.favicon }}" rel="shortcut icon">
+<script src="{{cdn '/assets/js/modernizr.js'}}" async></script>
+<script>window.History = { options: { delayInit: true } }</script>
 
-    {{inject 'themeImageSizes' theme_settings._images}}
-    {{> components/common/global-injects}}
+	{{{stylesheet '/assets/css/theme.css'}}}
+	{{ getFontsCollection }}
 
-    {{{snippet 'html_head'}}}
+	{{{head.scripts}}}
+	{{{head.rsslinks}}}
 
-    {{> core/structured-data/website}}
-  </head>
+	{{inject 'themeImageSizes' theme_settings._images}}
+	{{> components/common/global-injects}}
 
-  <body class="{{> components/common/body-classes}}">
+	{{{snippet 'html_head'}}}
 
-    {{#if page_type '===' 'product'}}
-      {{> components/common/facebook-like}}
-    {{else if page_type '===' 'blog'}}
-      {{> components/common/facebook-like}}
-    {{else if page_type '===' 'blog_post'}}
-      {{> components/common/facebook-like}}
-    {{/if}}
+	{{> core/structured-data/website}}
 
-    <div class="icons-svg-sprite">{{> components/common/icons/icon-defs}}</div>
-    <div class="site-wrapper">
-      {{{snippet 'header'}}}
+	{{> components/header/customizations/facebook-pixel}}
+</head>
 
-      {{> components/header/header}}
-      <div class="site-canvas">
-        <div class="on-canvas">
-          {{#contains page_type 'account'}}
-            {{> components/common/breadcrumbs breadcrumbs}}
-          {{/contains}}
-          {{#contains page_type 'login'}}
-            {{> components/common/breadcrumbs breadcrumbs}}
-          {{/contains}}
+<body class="{{> components/common/body-classes}}">
 
-          {{> components/common/banners banners=banners.top class='banners-top'}}
+	{{#if page_type '===' 'product'}}
+	{{> components/common/facebook-like}}
+	{{else if page_type '===' 'blog'}}
+	{{> components/common/facebook-like}}
+	{{else if page_type '===' 'blog_post'}}
+	{{> components/common/facebook-like}}
+	{{/if}}
 
-          <main class="main-content">
-            {{#block "page"}}{{/block}}
-          </main>
+	<div class="icons-svg-sprite">{{> components/common/icons/icon-defs}}</div>
+	<div class="site-wrapper">
+		{{{snippet 'header'}}}
 
-          {{> components/common/banners banners=banners.bottom class='banners-bottom'}}
+		{{> components/header/header}}
+		<div class="site-canvas">
+			<div class="on-canvas">
+				{{#contains page_type 'account'}}
+				{{> components/common/breadcrumbs breadcrumbs}}
+				{{/contains}}
+				{{#contains page_type 'login'}}
+				{{> components/common/breadcrumbs breadcrumbs}}
+				{{/contains}}
 
-          {{#if settings.show_newsletter_box}}
-            {{> components/common/newsletter-signup}}
-          {{/if}}
+				{{> components/common/banners banners=banners.top class='banners-top'}}
 
-          {{> components/footer/footer }}
-        </div>
+				<main class="main-content">
+					{{#block "page"}}{{/block}}
+				</main>
 
-        {{> components/header/customizations/navigation-mobile}}
-      </div> <!-- /site-canvas -->
+				{{> components/common/banners banners=banners.bottom class='banners-bottom'}}
 
-      {{> components/mini-cart/mini-cart
-        cart_icon=theme_settings.cart_icon
-      }}
-      {{> components/common/search-panel}}
-      <button class="button-top" data-scroll="#">
-        <svg class="icon icon-arrow-up"><use xlink:href="#icon-arrow-up" /></svg>
-      </button>
+				{{#if settings.show_newsletter_box}}
+				{{> components/common/newsletter-signup}}
+				{{/if}}
 
-      {{> components/common/login-modal}}
-    </div> <!-- /site-wrapper -->
+				{{> components/footer/footer }}
+			</div>
 
-    {{> core/structured-data/breadcrumbs}}
+			{{> components/header/customizations/navigation-mobile}}
+		</div> <!-- /site-canvas -->
 
-    <script src="{{cdn '/assets/js/bundle.js'}}"></script>
-    <script>
-      window.stencilBootstrap("{{template_file}}", {{jsContext}}).load();
-    </script>
+		{{> components/mini-cart/mini-cart cart_icon=theme_settings.cart_icon }}
+		{{> components/common/search-panel}}
+		<button class="button-top" data-scroll="#">
+			<svg class="icon icon-arrow-up">
+				<use xlink:href="#icon-arrow-up" /></svg>
+		</button>
 
-    {{{footer.scripts}}}
-    {{{snippet 'footer'}}}
-  </body>
+		{{> components/common/login-modal}}
+	</div> <!-- /site-wrapper -->
+
+	{{> core/structured-data/breadcrumbs}}
+
+	<script src="{{cdn '/assets/js/bundle.js'}}"></script>
+	<script>
+		window.stencilBootstrap("{{template_file}}", {{ jsContext }}).load();
+	</script>
+	
+	<!-- Affirm -->
+	<script>
+		_affirm_config = {
+			public_api_key: "YXSDQKAWLWQO1URY",
+			script: "https://cdn1-sandbox.affirm.com/js/v2/affirm.js"
+		};
+		(function (l, g, m, e, a, f, b) { var d, c = l[m] || {}, h = document.createElement(f), n = document.getElementsByTagName(f)[0], k = function (a, b, c) { return function () { a[b]._.push([c, arguments]) } }; c[e] = k(c, e, "set"); d = c[e]; c[a] = {}; c[a]._ = []; d._ = []; c[a][b] = k(c, a, b); a = 0; for (b = "set add save post open empty reset on off trigger ready setProduct".split(" "); a < b.length; a++)d[b[a]] = k(c, e, b[a]); a = 0; for (b = ["get", "token", "url", "items"]; a < b.length; a++)d[b[a]] = function () { }; h.async = !0; h.src = g[f]; n.parentNode.insertBefore(h, n); delete g[f]; d(g); l[m] = c })(window, _affirm_config, "affirm", "checkout", "ui", "script", "ready");
+	</script>
+	<!-- End Affirm -->
+
+	{{{footer.scripts}}}
+	{{{snippet 'footer'}}}
+</body>
 </html>
