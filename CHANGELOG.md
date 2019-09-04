@@ -1,5 +1,60 @@
 # Change Log
 
+## [1.20.5]
+- custom SASS refactor 
+- Fireplace Calculator
+- Tool tip modal
+- Tool tip color udpates
+- Tool tip free shipping text change
+- add search spring IntelliSuggest
+
+## [1.20.4]
+- removed featured offers from mobile nav
+- added free white glove shipping text
+- Updated footer carots on click to rotate
+- increased font size of bullet points
+- changed site from Lato to Karla font type
+- Increase space above “you may also like” for mobile
+- Increase space between yotpo and email sign up on mobile
+- prevent keyboard from opending on click of +/- icons
+- add rel next/prev for pagination
+- added click on body to close tooltip modal
+
+## [1.20.3]
+- added arrows to bottom product scroll
+- updated arrows for footer links
+- added affirm link in footer
+- updated to trade url
+- changed tool tip icon color and icon
+- made round swatches in request a swatch
+- fixed scroll button icon and height from bottom for mobile
+- fixed header padding height to show breadcrumbs on mobile
+
+## [1.20.2.001]
+- fixed cdn issue for affirm logo in header
+- fixed atc issue where price was malformated
+- fixed issue for order confirmation page causing 404
+
+## [1.20.2]
+- added isVisable to global header json to control promo banner
+- added ability to have both promo banner and header inline promo
+- renamed mega menu json to header json so we can use it for the whole header
+- fixed duplicate ids for search field
+- added affirm live key and js
+- added product tool tip and json
+- fixed dup h1 on product page
+- moved ajax loader gif to fix 404
+
+## [1.20.1]
+- removed footer year inline document.write and added it to footer.js
+- added header promo script from header.html to header.js and refacored
+- added custom pages feature for header json
+- bolt - removed reloadBigCommerceCart() and boolean value
+- added atl and title attributes to some links
+- updated footer links
+- refactored confirmation page "pay by check" function
+- script async and order change for performance
+
 ## [1.20.0] - 2019-07-23
 #### Enhanced
 - New Dynamic Enhanced Mega Menu (all devices)
