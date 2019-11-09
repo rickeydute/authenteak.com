@@ -1,6 +1,11 @@
 # Change Log
 
-## [1.20.11]
+## [1.20.12.01]
+- fixed mega menu on smaler width desktop
+- fixed button on pdp page
+- removed all sub cats for "shop all brands" category in the mega menu
+
+## [1.20.12]
 - New mega menu that is not full width
 - remvoed arrows
 - amp page changes

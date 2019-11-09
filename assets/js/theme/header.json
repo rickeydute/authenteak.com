@@ -16,7 +16,7 @@
         }
     },
     "category_2480": {
-        "minWidth": 950,
+        "minWidth": 1050,
         "makeShort": false,
         "landing_image": {
             "title": "Outdoor Furniture",
@@ -170,7 +170,7 @@
         }
     },
     "category_787": {
-        "minWidth": 850,
+        "minWidth": 1050,
         "makeShort": false,
         "landing_image": {
             "title": "Grills & Outdoor Kitchens",

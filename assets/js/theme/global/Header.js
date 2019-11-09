@@ -400,6 +400,8 @@ TEAK.Modules.megaMenu = {
 
     // Desktop: sets the display height for the container
     setDisplayDimention: function(id){
+		let isWiderThanViewport;
+
         if( this.data[id] !== undefined ){
 			var categoryId = document.getElementById(id);
 			
@@ -408,12 +410,17 @@ TEAK.Modules.megaMenu = {
 			}
 			
 			if( this.data[id].minWidth ){
+				isWiderThanViewport =  window.innerWidth < (this.data[id].minWidth + (384 + 20));
+				
+				let panelMinWidth = isWiderThanViewport ? ( id === "category_1196" ? "100vw" : window.innerWidth - (384 + 20)) : this.data[id].minWidth;
+				let panelParentWidth = isWiderThanViewport ? window.innerWidth : this.data[id].minWidth + (this.data[id].hasOwnProperty("landing_image") ? 384 : 0);
+
 				$(categoryId)
 					.parents(".dropdown-panel").css({
-						"minWidth": this.data[id].minWidth
+						"minWidth": panelMinWidth
 					})
 						.end()
-					.parents(".dropdown-panel-wrapper").css("width", this.data[id].minWidth + (this.data[id].hasOwnProperty("landing_image") ? 384 : 0) );
+					.parents(".dropdown-panel-wrapper").css("width", panelParentWidth);
 			}
 		}
 		
@@ -429,18 +436,18 @@ TEAK.Modules.megaMenu = {
 				top: bounding.top < 0,
 				left: bounding.left < 0,
 				bottom: bounding.bottom > window.innerHeight,
-				right: bounding.right > window.innerWidth
+				right: bounding.right + 20 > window.innerWidth
 			};
 		};
 
 
 
 		function getNewPosition(pos, elementPosition){
-			let update = {}, margin = 20;
+			let update = {}, margin = 0;
 
 			switch(pos){
 				case "right": 
-					update = {pos: -((elementPosition - window.innerWidth) + margin), direction: "left" }; 
+					update = {pos: -Math.abs(elementPosition - window.innerWidth + margin), direction: "left" }; 
 					break;
 			}
 
@@ -455,7 +462,7 @@ TEAK.Modules.megaMenu = {
 				let dropdownCheck = isInViewport(dropDown);
 
 				for(let key in dropdownCheck){
-					if(dropdownCheck[key]){
+					if(dropdownCheck[key] && !(dropDown.style["left"] || dropDown.style["right"]) ){
 						let newPosition = getNewPosition(key, dropDown.getBoundingClientRect()[key]);
 						$(dropDown).css(newPosition.direction, newPosition.pos);
 					}

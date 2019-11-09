@@ -23,6 +23,7 @@
 .product-trade{
     float: left;
     margin-top: 0;
+    width: 100%;
 }
 
 
@@ -261,6 +262,7 @@ ul.highlight-group {
 .product-quantity-submit .add-to-cart{
     width: 55%;
     margin: 15px 0 !important;
+    max-width: 350px;
 
     @media screen and (max-width: $screen-md){
         width: 100%;
@@ -273,6 +275,7 @@ ul.highlight-group {
         margin: 0 auto;
         width: 100%;
         float: none;
+        max-width: 100%;
     }
 }
 
