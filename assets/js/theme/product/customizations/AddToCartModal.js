@@ -48,7 +48,7 @@ export default class AddToCartModal {
           item[formData[i].name] = formData[i].value;
           break;
         
-          case 'qty':
+        case 'qty':
         case 'action':
           break; // Do nothing
 
@@ -156,6 +156,15 @@ export default class AddToCartModal {
     $('.modal-cart__count-unit').text(pendingCartQuantity === 1 ? ' item' : ' items');
 
 
+    try {
+      // bild out the recomendations 
+      this.buildRecomendations();
+      
+    } catch (error) {
+        console.log(error)
+    }
+
+
     let config = this.getGlobalScriptConfig();
 
     if (config && config.marketing_content && config.marketing_content.add_to_cart_modal) {
@@ -170,6 +179,44 @@ export default class AddToCartModal {
     if (callback) {
       callback();
     }
+  }
+
+
+  // builds out the recomendations in the atc modal footer
+  buildRecomendations(){
+    let recomendedProducts = document.querySelectorAll('.product-grid-item--recomm');
+    let modalFooter = document.getElementById("modalCartFooter");
+
+    $(modalFooter).html("");
+
+    console.log(recomendedProducts)
+
+    recomendedProducts.forEach( (element, i) => {
+      let limit = TEAK.Utils.isHandheld ? 2 : 4;
+
+      element = element.cloneNode(true);
+
+      if( i < limit ){
+        let img = element.querySelector("img.lazy-image");
+        let div = element.querySelector("div.lazy-image");
+
+        let background = $(div).data('src') !== "undefined" ? $(div).data('src') : $(div).attr('src');
+
+        $(div)
+          .addClass('lazy-loaded')
+          .css("backgroundImage", "url("+ background +")");
+
+        $(img)
+          .addClass("lazy-loaded")
+          .attr("src", background);
+
+        element.querySelector("spinner");
+
+        $(element).clone().appendTo(modalFooter);  
+      }
+
+
+    });
   }
 
 
@@ -250,8 +297,8 @@ export default class AddToCartModal {
       config = {
         "marketing_content": {
           "add_to_cart_modal": {
-            "summary": "This is <b>custom</b> marketing content.",
-            "footer": "This is space for more marketing content <i>with HTML</i>."
+            "summary": "",
+            "footer": ""
           }
         }
       };

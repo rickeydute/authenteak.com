@@ -42,7 +42,6 @@ export default class ProductOptions {
 
   // Build Product Custom Data Object ()
   buildCustomDataObject() {
-    window.TEAK = window.TEAK || {};
     window.TEAK.currentSelections = {};
     window.TEAK.lastHiResSwatch = '';
 
@@ -97,11 +96,12 @@ export default class ProductOptions {
       window.clearTimeout(self.hoverTimeout);
 
       let $el = $(e.currentTarget),
-          $optionText = $el.closest('[data-swatch-selector]').find('.form-field-title'),
+          $optionText = $el.closest('[data-swatch-selector]').find('.form-field-title-cntr'),
           $swatchText = $el.closest('[data-swatch-selector]').find('.swatch-value'),
           currentSelection = window.TEAK.currentSelections[$optionText.data('option-title')] || false,
           label = self.parseOptionLabel($el.data('swatch-value')),
           customOptionData = self.findCustomOptionData($optionText.data('option-title'), label.text);
+
       
       if (customOptionData) {
         label = customOptionData;
@@ -145,14 +145,16 @@ export default class ProductOptions {
     // on click - choose the swatch color selected
     function selectSwatchColor(e){
       let $el = $(e.currentTarget),
-          $optionText = $el.closest('[data-swatch-selector]').find('.form-field-title'),
+          $optionText = $el.closest('[data-swatch-selector]').find('.form-field-title-cntr'),
           $swatchText = $el.closest('[data-swatch-selector]').find('.swatch-value'),
           label = self.parseOptionLabel($el.data('swatch-value')),
           customOptionData = self.findCustomOptionData($optionText.data('option-title'), label.text);
 
+      $el.parents(".form-field-control").find("input:checked").prop("checked", false).attr("checked", false);
+
       // save the raw selection so we can use it later in other evenets
       self.currentlySelectedSwatch = e.currentTarget;
-      
+
       if (customOptionData) {
         label = customOptionData;
 
@@ -163,10 +165,15 @@ export default class ProductOptions {
         }
       }
 
-      // if you uncheck the swatch
-      if ($el.attr('data-is-selected')) {
 
-        $el.find('input[type="radio"]').prop('checked', false);
+      // if you uncheck the swatch
+      if ($el.attr('data-is-selected') && $el.find("input:radio").is(":checked")) {
+
+        console.trace()
+        console.log($el.data())
+
+        $el.find('input:radio').prop('checked', false).attr('checked', false);
+        
         e.preventDefault();
 
         delete window.TEAK.currentSelections[$optionText.data('option-title')];
@@ -191,8 +198,14 @@ export default class ProductOptions {
         $el.closest('.form-field-swatch').find('label[data-is-selected]').removeAttr('data-is-selected');
 
       } else {
+
+        // console.trace()
+        // console.log($el.data())
+
         // $el.closest('.form-field-swatch').find('label[data-is-selected]').removeAttr('data-is-selected');
         $el.attr('data-is-selected', true);
+        $el.find('input:radio').prop('checked', true).attr('checked', true);
+
  
         window.TEAK.currentSelections[$optionText.data('option-title')] = label;
 
@@ -226,7 +239,7 @@ export default class ProductOptions {
 
     this.$dropdowns.on('change', 'select', (e) => {
       let $el = $(e.currentTarget);
-      let $optionText = $el.closest('[data-product-attribute="set-select"]').find('.form-field-title');
+      let $optionText = $el.closest('[data-product-attribute="set-select"]').find('.form-field-title-cntr');
       let $opt = $el.find('option:selected');
       let label = self.parseOptionLabel($opt.text().trim());
       let customOptionData = self.findCustomOptionData($optionText.data('option-title'), label.text);
@@ -282,7 +295,7 @@ export default class ProductOptions {
     let self = this;
     this.$dropdowns.each(function() {
       let $el = $(this);
-      let $optionText = $el.closest('[data-product-attribute="set-select"]').find('.form-field-title');
+      let $optionText = $el.closest('[data-product-attribute="set-select"]').find('.form-field-title-cntr');
       let currentSelection = window.TEAK.currentSelections[$optionText.data('option-title')] || false;
       $el.find('option').each(function() {
         let $opt = $(this);
@@ -636,9 +649,11 @@ export default class ProductOptions {
     var labelText = option.grade ? `Grade ${option.grade}: ${option.text}` : option.text;
 
     var priceDiff = option.priceAdjustNumeric || 0;
+
     if (currentOption && typeof currentOption.priceAdjustNumeric !== 'undefined') {
       priceDiff = priceDiff - currentOption.priceAdjustNumeric;
     }
+
     if (priceDiff !== 0) {
       labelText += ' (' + this.formatPriceDiff(priceDiff) + ')';
     }

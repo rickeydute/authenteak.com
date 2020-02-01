@@ -32,6 +32,8 @@ export default class Header {
 			promoLink = document.createElement("a"),
 			promoBanner = document.getElementById('topHeaderPromo');
 
+		if(!promoBanner){ return; }
+
 		if ( extra_config.marketing_content.hasOwnProperty("banner") ) {
 			let promo = extra_config.marketing_content.banner;
 
@@ -39,7 +41,7 @@ export default class Header {
 				promoLink.setAttribute("href", promo.header_promo_link);
 			}
 			
-			promoLink.classList = "promoBanner__link " + ( promo.hasOwnProperty("header_custom_class") ? promo.header_custom_class : "" );
+			promoLink.setAttribute("class", "promoBanner__link " + ( promo.hasOwnProperty("header_custom_class") ? promo.header_custom_class : "" ) );
 			promoLink.innerHTML = promo.header_promo;
 
 			promoBanner.classList.add("promoBanner--" + promo.header_promo_color);
@@ -301,23 +303,22 @@ export default class Header {
 
 TEAK.Modules.megaMenu = {
 
-    data: TEAK.Utils.getMenuData(),
+    data: TEAK.Utils.getMenuJSON(),
 
     init: function(id){
         this
             .setCustomMobilePages(id)
             .setCustomMobileCategory(id, "shop_by_collection")
             .setCustomMobileCategory(id, "shop_by_brand")
-            .setCustomMobileImg(id);
+			.setCustomMobileImg(id);
             
-
         if( !TEAK.Utils.isHandheld ){
             this
                 .setCustomPages(id)
                 .setLandingImage(id)
                 .setCustomCategory(id, "shop_by_collection")
                 .setCustomCategory(id, "shop_by_brand")
-                .setDisplayHeight(id);
+                .setDisplayDimention(id);
         }
         
         return this;
@@ -336,7 +337,7 @@ TEAK.Modules.megaMenu = {
             document.getElementById(id).querySelector(".mega-nav-landing").innerHTML = tpl;
     
         }else{
-            document.getElementById(id).querySelector(".mega-nav-landing").style.display = "none";
+            document.getElementById(id).querySelector(".mega-nav-landing").style.visibility = "hidden";
         }
         
         return this;
@@ -349,7 +350,7 @@ TEAK.Modules.megaMenu = {
             let data = this.data[id][customCategory], parentLi,
                 sibblingItems = document.getElementById(id).querySelectorAll(".parent--collapse").limit,
 
-                tpl =   `<a href="${data.url}">${data.title}</a>
+                tpl =  `<a href="${data.url}">${data.title}</a>
                         <ul class="parent__child">
                 ${Object.keys(data.items).map(key => {
                     return `<li itemprop="name" class="parent__childItem">
@@ -362,7 +363,7 @@ TEAK.Modules.megaMenu = {
                         </ul>`;
 
             parentLi = document.createElement("li"),
-            parentLi.className = "parent has-children tier-dropdown";
+            parentLi.setAttribute("class", "parent has-children tier-dropdown");
             parentLi.innerHTML = tpl;
 
             document.getElementById(id).querySelectorAll(".mega-nav-list")[0].insertBefore(parentLi, sibblingItems);
@@ -378,12 +379,14 @@ TEAK.Modules.megaMenu = {
 
             this.data[id].pages.forEach((element) => {
                 let parentLi,
-                    tpl = `<a itemprop="url" href="${element.url}" title="${element.title}">
-                                <span itemprop="name">${element.title}</span>
+                    tpl =  `<a itemprop="url" href="${element.url}" title="${element.title}" class="${element.highlight ? 'mega-nav-item-hightlight' : '' }">
+								${element.emphasis ? "<em>" : ""}
+								<span itemprop="name">${element.title}</span>
+								${element.emphasis ? "</em>" : ""}
                             </a>`;
 
                 parentLi = document.createElement("li"),
-                parentLi.className = "parent parent--collapse tier-dropdown";
+                parentLi.setAttribute("class", "parent parent--collapse tier-dropdown");
                 parentLi.innerHTML = tpl;
 
                 document.getElementById(id).querySelectorAll(".mega-nav-list")[0].appendChild(parentLi);
@@ -396,12 +399,99 @@ TEAK.Modules.megaMenu = {
 
 
     // Desktop: sets the display height for the container
-    setDisplayHeight: function(id){
+    setDisplayDimention: function(id){
         if( this.data[id] !== undefined ){
+			var categoryId = document.getElementById(id);
+			
             if( this.data[id].makeShort ){
-                document.getElementById(id).querySelectorAll(".mega-nav-list")[0].classList.add("mega-nav-list--short");
-            }
-        }
+                categoryId.querySelectorAll(".mega-nav-list")[0].classList.add("mega-nav-list--short");
+			}
+			
+			if( this.data[id].minWidth ){
+				let wrapperWidth = checkWrapperWidth(this.data[id]);
+
+				// console.log(this.data[id].minWidth)
+				// console.log(minWidth)
+
+				$(categoryId)
+					.parents(".dropdown-panel").css({
+						"minWidth": this.data[id].minWidth
+					})
+						.end()
+					.parents(".dropdown-panel-wrapper").css("width", wrapperWidth.width);
+			}
+		}
+
+
+
+
+		/**
+		 * if the width you are asking me to set is just 40 pixels less than the 
+		 * actual window width, just set my width to 100% 
+		 * 
+		 * Later, if this is the case make sure that you postion my left to be flush
+		 * to the left side of screen realitive to where I currenty live
+		 */
+
+		function checkWrapperWidth(element){
+			let hasImageWidth =  (typeof element.landing_image !== "undefined" ? 384 : 0),
+				newSetWidth = element.minWidth + hasImageWidth,
+				fitsWindow = (window.innerWidth - newSetWidth < 40);
+
+			return { 
+				fits: fitsWindow,
+				width: fitsWindow ? window.innerWidth - hasImageWidth : newSetWidth
+			};
+		}
+
+
+
+		/*
+		* Modified, but inspired by: 
+		* Chris Ferdinandi, MIT License, https://gomakethings.com
+		*/
+		function isInViewport(elem) {
+			let bounding = elem.getBoundingClientRect();
+
+			return {
+				top: bounding.top < 0,
+				left: bounding.left < 0,
+				bottom: bounding.bottom > window.innerHeight,
+				right: bounding.right > window.innerWidth
+			};
+		};
+
+
+
+		function getNewPosition(pos, elementPosition){
+			let update = {}, margin = 5;
+
+			switch(pos){
+				case "right": 
+					update = {pos: -((elementPosition - window.innerWidth) + margin), direction: "left" }; 
+					break;
+			}
+
+			return update;
+		}
+
+
+		document.getElementById("mainNavBar").querySelector("li["+id+"]").addEventListener("mouseenter", function() { 
+			let dropDown = this.querySelectorAll(".dropdown-panel-wrapper")[0];
+			
+			setTimeout(function(){
+				let dropdownCheck = isInViewport(dropDown);
+				
+				for(let key in dropdownCheck){
+					if(dropdownCheck[key]){
+						let newPosition = getNewPosition(key, dropDown.getBoundingClientRect()[key]);
+						$(dropDown).css(newPosition.direction, newPosition.pos);
+					}
+				}
+
+			}, 300);
+			
+		});
        
         return this;
     },
@@ -421,7 +511,7 @@ TEAK.Modules.megaMenu = {
                         </a>`;
                         
             mobileItem = document.createElement("li");
-            mobileItem.className = "nav-mobile-item has-children";
+            mobileItem.setAttribute("class", "nav-mobile-item has-children");
             mobileItem.innerHTML = tpl;
 
             document.getElementById("mobile_" + id).appendChild(mobileItem);
@@ -448,7 +538,7 @@ TEAK.Modules.megaMenu = {
                     </li>`}).join("")}`;
 
         navPanel = document.createElement("ul");
-        navPanel.classList = "nav-mobile-panel nav-mobile-panel-child is-right";
+        navPanel.setAttribute("class", "nav-mobile-panel nav-mobile-panel-child is-right");
         navPanel.setAttribute("data-mobile-menu", data.url);
         navPanel.setAttribute("data-panel-depth", "2");
         navPanel.innerHTML = tpl;
@@ -470,7 +560,7 @@ TEAK.Modules.megaMenu = {
                         </a>`;
 
             navItem = document.createElement("li")
-            navItem.classList = "nav-mobile-item nav-mobile-item--image";
+            navItem.setAttribute("class", "nav-mobile-item nav-mobile-item--image");
             navItem.innerHTML = tpl;
         }
 
@@ -484,12 +574,12 @@ TEAK.Modules.megaMenu = {
         if( this.data[id].hasOwnProperty("pages") ){
             this.data[id].pages.forEach((element) => {
                 let navItem,
-                    tpl =   `<a itemprop="url" href="${element.url}" title="${element.title}" class="nav-mobile-link">
+                    tpl =  `<a itemprop="url" href="${element.url}" title="${element.title}" class="nav-mobile-link">
                                 <span class="nav-mobile-text" itemprop="name">${element.title}</span>
                             </a>`;
 
                 navItem = document.createElement("li"),
-                navItem.className = "nav-mobile-item";
+                navItem.setAttribute("class", "nav-mobile-item");
                 navItem.innerHTML = tpl;
 
                 document.getElementById("mobile_" + id).appendChild(navItem);

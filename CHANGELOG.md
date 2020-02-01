@@ -1,8 +1,160 @@
 # Change Log
 
+## [1.20.18]
+- Heap Analytics tracking defect fixes
+- QA js exception fixes
+- added RV to cart page
+- fixed an issue with the selectbox option values still showing dollar amounts
+- made the logo smaller on mobile
+- fixed issue where one has to click an option value twice before it can be selected
+- fixed issue were at window sizes larger than table 1080 but smaller than 1300px larger main nav menus were being cutoff
+
+## [1.20.17.001]
+- added unique UID for google analitcs as well as updated the uid in heap to use unified code
+
+## [1.20.17]
+- Fixed issue where swatch was showing incorrect dicount amount due to class change from form-field-title to form-field-title-cntr
+- Updated the main logo
+- Change warantes page layout
+
+## [1.20.16.003]
+- Fixed issue with product rec where the wrong products where pulling out of order
+
+## [1.20.16.002]
+- fixed an issue where only a few rec. products in the atc modal show due to an ui exception
+
+## [1.20.16.001]
+- fixed issue where utility functions in TEAK were undefined
+- fixed tabs issue where they were not initalizing on doc ready
+- fixed issue where the stored cart may be empty can cause an exception when trying to count cart items
+- fixed an exeption in pintrest when trying to read the cart when none is saved.
+- fixed an issue where only a few rec. products in the atc modal show due to an ui exception
+
+## [1.20.16]
+- added heap analytics code
+- fixed an ATC issue that was a race issue
+
+## [1.20.15]
+- Google Strucutred data fix
+- Pintrest Strucutred data
+- Yotpo UI color changes
+- Custom Pintrest analytics events ATC, Checkout, Page View
+- Footer tablet UI update
+- Blog release
+- Tool tip functional fix
+- ATC adding product recomendations
+- Move mobile breadcrumbs
+- Custom Brand warantee page UI
+- Create Recently viewed Module and RV UI for PDP
+
+## [1.20.14]
+- Blog index and article page Redesign
+- Print on PDP Fix
+- Added Product recomendations on ATC Modal
+- Added shipping 0.00 text to cart
+- Fixed ATC modal UI
+- fixed Google Search structured dta
+- PDP Product Tabs
+- YOTPO widget color updates
+- background color from footer removed
+- custom PDP heap event setup
+- Tablet footer adjustment
+- removed "shop all" categories from shop by brand flyout
+
+## [1.20.13.002]
+- moved new/sale flags back
+- changed subtotal when discount is in cart
+
+## [1.20.13]
+- Relocate all banners (cart level eligability, cart level congratulations, etc.) from below the product information to above
+- Change the font size to 1rem
+- Remove background of 'shopping cart' area
+- Add border-bottom 1px below shopping cart to match the other horizontal divider
+- Pencil banner colors
+- recomended products width fix
+- custom yotpo reviews stars
+- remove underline from pdp text
+- Updated readme notes
+- redesign sale and new flags
+- display cart discount messaging
+
+## [1.20.12.01]
+- New mega menu that is not full width
+- remvoed arrows
+- amp page changes
+- made tablet header same for both portrate and landscape
+
+
+## [1.20.11]
+- AMP Product Pages (not 100% complete)
+- Added updated tool tips types for product options
+- improved transiion area from nav elemnt to dropdown
+- improved mega menu colum widths
+- added sku exclusioni for free wg and free shipping
+- added featured offers for mobile nav
+- fixed search button
+- removed shop all children
+
+## [1.20.10]
+- added new nav component
+- rounded search bar
+- navigation fixes
+- moved -or- text on cart page
+- search input placeholder text update
+- made section headers on mobile nav cliclable
+
+## [1.20.9]
+- Returns Tab to product json for ease of editing
+- update the trad verbage
+- change the color for the newsletter button to grey
+- remove the background color from category description
+- aded blank templates for pages and categories
+- fixed return tab form mobile
+
+## [1.20.8]
+- Added under lines for p text
+- added new calculator options and step progress
+- adjusted header margin to not use JS
+- New Email signup module to lazy load 3rd party
+- finalized shop all brand page tempalte
+- make "you may also like" in all caps
+- fixed breadcrumbs. see header fix above
+- added trade visability under atc button
+- makde yotpo widget the same width as the page
+- removed second shipping lead time
+- updated search text
+- added returns tab information
+
+## [1.20.7.005]
+- merge testing for file upload issue
+
+## [1.20.7]
+- Heap Analitics tracking
+- Added infinate scroll to PLP pages as well as rel=nofollow
+- New Brands Page
+- CTA and ATC Buton Changes
+- checkout buttons, mini cart, modal buttons updates
+- fixed white glove shipping logic
+
+## [1.20.6]
+- custom.sass SASS refactor 
+- add IntelliSuggest to cart and order confirmation
+- Tool tip modal updates
+- fixed header json so that formatting will work for pages
+- reduce affirm box height
+- added function to fix links in the plp set by search spring that are absolute to authenteak.com to work localy
+- added work around for searchspring giving product lisitng images a fixed width.
+- made 2 colums for plp pages and fixed straggler product for non 2 image ending
+- fixed IE11 issues, namely ES6 modules in .html files causing exceptions
+- moved product tab functionality into product.js
+- IE11 PLP column fix
+- IE11 Cart fix
+- IE11 cart modal fix
+- IE11 PIP UI fix
+
 ## [1.20.5]
-- custom SASS refactor 
-- Fireplace Calculator
+- custom.sass SASS refactor 
+- Fireplace Calculator updates
 - Tool tip modal
 - Tool tip color udpates
 - Tool tip free shipping text change

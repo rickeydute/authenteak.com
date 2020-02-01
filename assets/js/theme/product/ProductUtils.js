@@ -32,7 +32,7 @@ export default class ProductUtils {
   }
 
   _bindEvents() {
-    this.$el.find('.product-quantity-toggle').on('click', (event) => {
+    $(document).on('click', 'button.product-quantity-toggle', (event) => {
       this._updateQuantity(event);
       //call the function that updates the price here!
     });
@@ -297,16 +297,18 @@ export default class ProductUtils {
   };
 
   _updateQuantity(event) {
+    event.preventDefault();
+
     const $target = $(event.currentTarget);
-    const $quantity = $target.closest('.product-quantity-container').find('.product-quantity');
+    const $quantity = $target.parents('.product-quantity-container').find('input.product-quantity');
 
     // Mobile Only: add read only to prevent keyboard when the +/- controls are clicked
-    if( window.TEAK.Utils.isHandheld ){ $quantity.attr("readonly", true); }
+    // if( window.TEAK.Utils.isHandheld ){ $quantity.attr("readonly", true); }
    
     const min = parseInt($quantity.prop('min'), 10);
     const max = parseInt($quantity.prop('max'), 10);
-    let newQuantity = parseInt($quantity.val(), 10);
 
+    let newQuantity = parseInt($quantity.val(), 10);
     newQuantity = isNaN(newQuantity) ? min : newQuantity;
     
     if ($target.hasClass('product-quantity-increment') && (!max || newQuantity < max)) {

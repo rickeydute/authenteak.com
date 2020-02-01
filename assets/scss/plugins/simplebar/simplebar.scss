@@ -48,6 +48,14 @@
     -webkit-overflow-scrolling: touch;
 }
 
+.simplebar-offset{
+    right: -20px;
+
+    @media only screen and (max-width: $screen-sm) {
+        right: -5px !important;
+    }
+}
+
 .simplebar-content {
     direction: inherit;
     box-sizing: border-box !important;

@@ -6,6 +6,8 @@ import Loading from 'bc-loading';
 import svgIcon from './global/svgIcon';
 import fillFacetRatingStars from './global/fillFacetRatingStars';
 import toggleFacet from './global/toggleFacet';
+import InfiniteScroll from 'infinite-scroll';
+import ProductImages from './product/ProductImages';
 
 export default class Category extends PageManager {
   constructor() {
@@ -17,10 +19,16 @@ export default class Category extends PageManager {
       initCompare();
     }
 
+    // Product Images
+		new ProductImages(".product-slides-wrap");
+
     this._bindEvents();
+
+    this.initAnalytics();
 
     fillFacetRatingStars();
   }
+
 
   loaded(next) {
     this._initializeFacetedSearch(this.context.listingProductCount);
@@ -28,7 +36,12 @@ export default class Category extends PageManager {
     next();
   }
 
+
+
+
   _bindEvents() {
+    this._infiniteScroll();
+
     this.$body.on('click', '[data-listing-view]', (event) => {
       this._toggleView(event);
     });
@@ -38,6 +51,33 @@ export default class Category extends PageManager {
       $(event.currentTarget).toggleClass('is-open').next().toggleClass('visible');
     });
   }
+
+
+  initAnalytics(){
+		TEAK.thirdParty.heap.init({
+      method: 'track',
+      event: 'plp_view',
+      location: 'plp'
+    });
+	}
+
+
+  // infinate scroll for BC powered HTML underlay, only for SEO purposes
+  _infiniteScroll() {
+    const elem = document.querySelector('.listing-wrapper');
+
+    if(elem){
+      const infScroll = new InfiniteScroll(elem, {
+          path: '.pagination-link--next',
+          append: '.product-grid-item',
+          history: false,
+      });
+      return infScroll;
+    }
+  }
+
+
+
 
   _initializeFacetedSearch(productCount) {
     const loadingOptions = {

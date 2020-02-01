@@ -16,8 +16,6 @@ export default class EditOptions {
 
     this.preloadedContent = {};
 
-    window.TEAK = window.TEAK || {};
-    window.TEAK.currentSelections = {};
 
     // Handle events that require deliberate action (e.g. click)
     this.bindEditFunctionality();
@@ -164,7 +162,7 @@ export default class EditOptions {
 
     this.$editModal.on('click', `${self.swatchesSelector} label`, (e) => {
       let $el = $(e.currentTarget);
-      let $optionText = $el.closest('[data-swatch-selector]').find('.form-field-title');
+      let $optionText = $el.closest('[data-swatch-selector]').find('.form-field-title-cntr');
       let $swatchText = $el.closest('[data-swatch-selector]').find('.swatch-value');
       let label = self.parseOptionLabel($el.data('swatch-value'));
       // let customOptionData = self.findCustomOptionData($optionText.data('option-title'), label.text);

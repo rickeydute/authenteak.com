@@ -14,6 +14,7 @@ import async from 'async';
 import account from './theme/core/Account';
 import auth from './theme/Auth';
 import blog from './theme/Blog';
+import blogPost from './theme/BlogPost';
 import brand from './theme/Brand';
 import brands from './theme/Brands';
 import cart from './theme/Cart';
@@ -28,6 +29,7 @@ import home from './theme/Home';
 import orderComplete from './theme/OrderComplete';
 import page from './theme/Page';
 import product from './theme/Product';
+import personalization from './theme/Personalization';
 import AmpProduct from './theme/AmpProduct';
 import search from './theme/Search';
 import sitemap from './theme/Sitemap';
@@ -54,11 +56,12 @@ let PageClasses = {
     'pages/auth/new-password': auth,
     'pages/auth/forgot-password': auth,
     'pages/blog': blog,
-    'pages/blog-post': blog,
+    'pages/blog-post': blogPost,
     'pages/brand': brand,
     'pages/brands': brand,
     'pages/cart': cart,
     'pages/category': Category,
+    'pages/amp/category': Category,
     'pages/compare': compare,
     'pages/contact-us': contactUs,
     'pages/errors': errors,
@@ -71,6 +74,7 @@ let PageClasses = {
     'pages/order-complete': orderComplete,
     'pages/page': page,
     'pages/product': product,
+    'pages/amp/product': product,
     'pages/search': search,
     'pages/sitemap': sitemap,
     'pages/subscribed': subscribe,

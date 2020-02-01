@@ -1,22 +1,77 @@
+:root {
+    --star-size: 15px;
+    --star-color: #fff;
+    --star-background: #fc0;
+  }
+  
+  .yotpo-stars-rating {
+    --percent: calc(var(--rating) / 5 * 100%);
+    position: relative;
+    display: inline-block;
+    font-size: var(--star-size);
+    font-family: Times;
+    line-height: 1;
+    height: 15px;
+    width: 90px;
+   
+    &::before {
+      content: '★★★★★';
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 10;
+    }
+  
+    &::after{
+      content: '★★★★★';
+      letter-spacing: 3px;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 0px 1px #000;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  }
+
+
+
+  .yotpo .yotpo-first-review .yotpo-first-review-stars .yotpo-icon-star{
+      color: var(--star-background) !important;
+  }
+
+  .yotpo-reviews-num{
+      padding: 0 5px;
+      text-decoration: underline;
+  }
+
+  .yotpo-questions{
+      padding-left: 10px;
+      margin-left: 5px;
+      border-left: 1px solid #ccc;
+      text-decoration: underline;
+  }
+
 //Yotpo
 .Reviewstart {
     display: flex;
     justify-content: center;
 }
 
-.nxt-logo,
-a[target="_blank"][href="http://www.nextopia.com"] {
-    display: none !important;
+.yotpo.yotpo-main-widget{
+   @extend .container;
 }
-
-// .yotpo {
-//     padding: 10px 0;
-// }
 
 .yotpo .text-m {
     margin-left: 15px;
 }
-
 
 .yotpo-pdp-wrapper{
     display: flex;
@@ -25,6 +80,18 @@ a[target="_blank"][href="http://www.nextopia.com"] {
     align-content: center;
     flex: 1 0 auto;
     margin-left: 20px;
+    height: 20px;
+}
+
+.yotpo-rv-wrapper{
+    @extend .yotpo-pdp-wrapper;
+    margin: 0;
+    justify-content: center;
+
+    & .yotpo-reviews-num{
+        padding: 0 1px;
+        text-decoration: none;
+    }
 }
 
 .yotpo-pdp-wrapper .bottomLine,
@@ -39,4 +106,55 @@ a[target="_blank"][href="http://www.nextopia.com"] {
 
 .yotpo-stars + a.text-m, .slick-list .product-price-line{
     display: none;
+}
+
+.yotpo-default-button{
+    @extend %button-rounded;
+    background-color: transparent !important;
+    background: transparent !important;
+    @extend %yotpo-grey-color;
+    border: 1px solid #ccc !important;
+}
+
+
+%yotpo-grey-color{
+   color: #a2a2a2 !important;
+}
+
+.yotpo .font-color-primary,
+.yotpo a,
+.yotpo .yotpo-nav ul .yotpo-nav-tab.yotpo-active span,
+.yotpo .yotpo-review .yotpo-header .yotpo-header-element .y-label.yotpo-user-name,
+.yotpo .yotpo-review .yotpo-header .yotpo-review-stars .yotpo-icon,
+.yotpo.yotpo-main-widget .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2 .yotpo-star-distribution .yotpo-star-distribution-content .yotpo-distributions-graphs .yotpo-star-distribution-graph .yotpo-star-distribution-score-wrapper .yotpo-star-distribution-graph-score,
+.yotpo.yotpo-main-widget .yotpo-bottomline.yotpo-bottomline-3-boxes .yotpo-bottomline-box-2 .yotpo-star-distribution .yotpo-star-distribution-content .yotpo-distibutions-stars .review-stars .yotpo-icon-star{
+   @extend %yotpo-grey-color;
+}
+
+
+.yotpo-logo-title{
+    a{
+        @extend %yotpo-grey-color;
+    }
+}
+
+
+.yotpo .yotpo-comments-box{
+    border-left-color: #a2a2a2 !important;
+}
+
+.yotpo-nav .yotpo-nav-wrapper {
+    border-color: #a2a2a2 !important;
+
+    .yotpo-nav-tab span{
+        color: #ccc !important;
+    }
+
+    .yotpo-nav-tab.yotpo-active span{
+        @extend %yotpo-grey-color;
+    }
+}
+
+.yotpo.yotpo-main-widget .yotpo-icon-btn .yotpo-icon, .yotpo-icon-button-text{
+    color: #666 !important;
 }

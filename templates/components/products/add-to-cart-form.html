@@ -32,30 +32,32 @@
 
 
 
-      {{#each product.custom_fields}}
-        {{#if this.name '===' "Free Shipping Icon"}}   
-          {{#if this.value '===' "Yes"}}
-          
-            {{#if ../../../product.price.without_tax.value '<' "2998"}}
-            <p class='free-shipping-text' data-pricing-free-shipping>{{lang 'product.shipping_free'}}</p>
-            {{else}}
-            <p class='free-shipping-text' data-pricing-free-shipping>
-                <a href="" class="free-shipping-text--link" tool-tip-open data-tool-tip-type="element" data-tool-tip-name="free_white_glove_delivery">
-                  {{lang 'product.free_white_glove'}} &nbsp;
-                  <span class="toolTip__iconCntr toolTip__iconCntr--dark">
-                    <svg class="toolTip__icon toolTip__icon--white" enable-background="new 0 0 20 20" version="1.1" viewBox="0 0 20 20" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
-                      <title>tool tip</title>
-                      <path d="M12.432 0c1.34 0 2.010 0.912 2.010 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-0.75-1.974-1.99 0-1.043 0.881-2.479 2.643-2.479zM8.309 20c-1.058 0-1.833-0.652-1.093-3.524l1.214-5.092c0.211-0.814 0.246-1.141 0-1.141-0.317 0-1.689 0.562-2.502 1.117l-0.528-0.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273 0.705 3.23l-1.391 5.352c-0.246 0.945-0.141 1.271 0.106 1.271 0.317 0 1.357-0.392 2.379-1.207l0.6 0.814c-2.502 2.547-5.235 3.527-6.291 3.527z"></path>
-                    </svg>
-                  </span>
-                </a>
-                <span class="toolTip__cntr hide" id="free_white_glove_delivery"></span>
-            </p>
-            {{/if}}
+    {{#each product.custom_fields}}
+      {{#if this.name '===' "Free Shipping Icon"}}   
+        {{#if this.value '===' "Yes"}}
 
-          {{/if}}
+        
+          <div id="freeShipping">
+            <script>
+              /* Displays the free shipping text based on price */
+              document.addEventListener('DOMContentLoaded', function(){
+                  TEAK.Modules.freeShipping.set({
+                    price: {
+                      rrp_without_tax: '{{../../../product.price.rrp_without_tax.value}}' === '' ? 0 : parseInt('{{../../../product.price.rrp_without_tax.value}}'),
+                      with_tax: '{{../../../product.price.with_tax.value}}' === '' ? 0 : parseInt('{{../../../product.price.with_tax.value}}'),
+                      without_tax: '{{../../../product.price.without_tax.value}}' === '' ? 0 : parseInt('{{../../../product.price.without_tax.value}}'),
+                      custom: '{{~default ../../../product.price.sale_price_without_tax.value price.without_tax.value~}}' === '' ? 0 : parseInt('{{~default ../../../product.price.sale_price_without_tax.value price.without_tax.value~}}')
+                    },
+                    sku: "{{../../../product.sku}}"
+                  }, "freeShipping");
+              });
+            </script>
+          </div>
+
+            
         {{/if}}
-      {{/each}}
+      {{/if}}
+    {{/each}}
       
 
       {{#if product.options}}
@@ -100,13 +102,13 @@
               pattern="[0-9]+"
             >
             <div class="product-quantity-toggle-wrapper">
-              <span class="product-quantity-toggle product-quantity-decrement">
+              <button type="button" class="product-quantity-toggle product-quantity-decrement">
                 <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
-              </span>
+              </button>
               
-              <span class="product-quantity-toggle product-quantity-increment">
+              <button type="button" class="product-quantity-toggle product-quantity-increment">
                 <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
-              </span>
+              </button>
              
             </div>
           </label>
@@ -157,13 +159,14 @@
         class="
           button
           button-primary
+          button-primary--green
           button-wide
           add-to-cart
           button-progress
           spinner
         "
         data-button-purchase
-      >
+        onclick="TEAK.thirdParty.heap.init({method: 'track', event:'add_to_cart', location: 'pdp' })">
         <span class="button-text">
           {{#if product.pre_order}}
             {{lang 'product.pre_order'}}
@@ -185,6 +188,8 @@
         </div>
       {{/if}}
     {{/if}}
+
+    <p class="product-trade"><a href="/to-the-trade" title="Learn more about trade benifits">Shopping for a Client? Apply for Trade benefits.</a></p>
 
     {{#if settings.show_wishlist}}
       <div class="wishlist-form" data-wishlist-dropdown>
@@ -224,13 +229,23 @@
 
 <script>
 (function(){
-  var atcBtn = document.querySelector("[data-button-purchase]"),
-      product = document.querySelector("[data-product-container]").dataset,
-      price = document.querySelector(".price-value").innerText.trim().replace(/\$|,/g, '');
+      
+  document.querySelector("[data-button-purchase]").addEventListener("click", function(){
+    let qty = document.querySelector(".product-quantity").value,
+        price = document.querySelector(".price-value").innerText.trim().replace(/\$|,/g, '');
 
-  atcBtn.addEventListener("click", function(){
-    TEAK.Modules.fbPixel.addToCart(product.productTitle, price, product.productId);
+    TEAK.Modules.fbPixel.addToCart("{{product.title}}", price, "{{product.id}}");
+
+    TEAK.Modules.pintrest.addToCart({
+      price: price, 
+      qty: qty,
+      id: "{{product.id}}",
+      name: "{{product.title}}",
+      brand: "{{product.brand.name}}",
+      categories: ["{{product.category}}"]
+    });
   });
 
 }());
 </script>
+

@@ -9,21 +9,28 @@
     {{cart_icon}}-icon
     {{theme_settings.product-single-display-order}}
   "
+  id="productDetails"
   data-product-container
   data-product-title="{{product.title}}"
   data-product-id="{{product.id}}">
   <div class="container">
     {{#unless quick_view}}
+    <div class="mobileHide">
       {{> components/common/breadcrumbs breadcrumbs}}
+    </div>
     {{/unless}}
 
     <div class="product-details-column">
       <h2 class="product-title mobileShow">{{this.product.title}}</h2>
+      <div class="mobileShow">
+        {{> components/common/breadcrumbs breadcrumbs}}
+      </div>
       <p class="item-number item-number-mobile mobileShow">ITEM #: {{product.sku}}</p>
 
       {{> components/products/customizations/swatch-hover-detail}}
 
-      {{> components/products/product-single-images images=product.images default_image=theme_settings.default_image }}
+      {{> components/products/product-single-images videos=product.videos images=product.images default_image=theme_settings.default_image }}
+      
       <!--moved from add-to-cart-form.html-->
       <div class="share-block">
         <hr>
@@ -62,10 +69,13 @@
       
         <div class="item-number">
           <span class="mobileHide">ITEM #: {{product.sku}}</span>
-          <span class="yotpo-pdp-wrapper">
-              <span class="yotpo bottomLine" data-product-id="{{ product.id }}"></span>  
-              <span class='yotpo QABottomLine' data-appkey='aS8rMIONwGgNbx1ATQmUtKY173Xk5HHc75qGrnuq' data-product-id='{{ product.id }}'></span>
-          </span>
+          <a class="yotpo-pdp-wrapper" href="#yotpoReviews" id="yotpoRating" title="Reviews of {{product.title}}">
+            <span class="yotpo-stars-rating" style="--rating: 0;" aria-label="Rating of 0 out of 5."></span>
+            <span class="yotpo-reviews-num">0</span>
+            <span class="yotpo-questions">
+              <span class="yotpo-questions-num">0</span> Questions
+            </span>
+          </a>
         </div>
       
 
@@ -79,6 +89,7 @@
           {{/if}}
       </div>
 
+      
       <div class="affirm-pdp"></div>      
 
       <!-- moved to add-to-cart.html -->
@@ -164,8 +175,15 @@
           {{{product.warranty}}}
       </div>
 
-      <div id="returnTab">
-          
+      <div id="returnTab" class="returnTabContent">          
+        <script>
+          document.addEventListener("DOMContentLoaded", function(){
+            window.TEAK.Modules.tabs.getTabContent({
+              key: "returnTab",
+              mobileCntr: ".returnContent"
+            });
+          });
+        </script>
       </div>
 
       <div id="videoTab">
@@ -198,7 +216,6 @@
       <div class="tab-content"></div>
   </div>
 
-
   <div class="mobile-tab-wrapper">
     <a class="mobile-tab-heading" data-tabVal="descTab">Description</a>
     <div class="descContent active"></div>
@@ -224,198 +241,71 @@
     <a class="mobile-tab-heading mobile-returnTab" data-tabVal="returnTab">Return Policy</a>
     <div class="returnContent"></div>
   </div>
+
+  <div class="product-row">
+    <a href="{{product.brand.url}}" title="More {{product.brand.name}} products" class="button button-secondary--darkTrans">
+      Shop all {{product.brand.name}}
+    </a>
+  </div>
 </section>
 
 <!-- moved yotpo to tempaltes/pages/product.html -->
 
-<script>
-(function(document){
-
-  var tabClone, tabValue,
-      tabButtons = document.querySelectorAll('.tab-header a'),
-      tabContentEl = document.querySelector('.tab-content'),
-      mobileTabButtons = document.querySelectorAll('.mobile-tab-heading');
-
-  const tabs = [
-          {
-            type: document.querySelector('#specsTab'),
-            id: "specsTab",
-            tabBtnClass: ".specsBtn",
-            mobileClass: ".mobile-specsTab",
-            mobileObj: document.querySelector('.specsContent')
-          },
-          {
-            type: document.querySelector('#careTab'),
-            id: "careTab",
-            tabBtnClass: ".careBtn",
-            mobileClass: ".mobile-careTab",
-            mobileObj: document.querySelector('.careContent')
-          },
-          {
-            type: document.querySelector('#shipTab'),
-            id: "shipTab",
-            tabBtnClass: ".shipBtn",
-            mobileClass: ".mobile-shipTab",
-            mobileObj: document.querySelector('.shipContent')
-          },
-          {
-            type: document.querySelector('#pdfTab'),
-            id: "pdfTab",
-            tabBtnClass: ".pdfBtn",
-            mobileClass: ".mobile-pdfTab",
-            mobileObj: document.querySelector('.pdfContent')
-          },
-          {
-            type: document.querySelector('#videoTab'),
-            id: "videoTab",
-            tabBtnClass: ".videoBtn",
-            mobileClass: ".mobile-videoTab",
-            mobileObj: document.querySelector('.videoContent')
-          },
-          {
-            type: document.querySelector('#warrantyTab'),
-            id: "warrantyTab",
-            tabBtnClass: ".warrantyBtn",
-            mobileClass: ".mobile-warrantyTab",
-            mobileObj: document.querySelector('.warrantyContent')
-          },
-          {
-            type: document.querySelector('#returnTab'),
-            id: "returnTab",
-            tabBtnClass: ".returnBtn",
-            mobileClass: ".mobile-returnTab",
-            mobileObj: document.querySelector('.returnContent')
-          }
-        ];
+{{> components/products/customizations/request-swatch-modal product}}
 
 
+<!-- Pintrest Structured Data -->
 
-    const tabsModule = {
-
-      // activate the first tab
-      activateFirstTab: function(args){
-        var dataDumpEl = document.querySelector(args.dataClass),
-            mobileDesc = document.querySelector(args.contentClass),
-            prodDescEl = document.createElement('div');
-
-        prodDescEl.setAttribute('id', args.id);
-        prodDescEl.classList.add('active');
-        prodDescEl.appendChild(dataDumpEl);
-
-        tabClone = prodDescEl.cloneNode(true);
-
-        tabContentEl.appendChild(prodDescEl);
-        mobileDesc.appendChild(tabClone);
-
-        return this;
-      },
+{{#partial "jsonPrice"}}
+{{#if product.price.without_tax}}
+{{> components/products/customizations/non-sale-price-value-fixed price=product.price}}
+{{/if}}
+{{#if product.price.with_tax}}
+{{#unless product.price.without_tax}}{{chop product.price.with_tax.value}}{{/unless}}
+{{/if}}
+{{/partial}}
 
 
-      //Initialize tabbed content
-      initTabContent: function() {
-
-        // itterate over our tabs object and build out each tab skipping any tabs that have no content
-        tabs.forEach( (element) => {
-          if (element.type !== null && document.getElementById(element.id).innerHTML.trim() !== "") {
-            let cln = element.type.cloneNode(true);
-
-            tabClone.querySelector('#' + element.id).parentNode.removeChild(tabClone.querySelector('#' + element.id))
-            tabContentEl.appendChild(element.type);
-            element.mobileObj.appendChild(cln);
-
-          } else {
-            // hide desktop button item 
-            document.querySelector("[data-tabval='"+ element.id +"']").parentElement.classList.add('innactive-tab');
-            // hide desktop pane
-            document.querySelector("[data-tabval='"+ element.id +"']").parentElement.classList.add('innactive-tab');
-            // hide mobile tab
-            document.querySelector("[data-tabval='"+ element.id +"'].mobile-tab-heading").classList.add('innactive-tab');
-          }
-
-        });
-
-        return this;
-      },
-
-
-      //Clear active tab headers
-      clearTabHeaders: function() {
-        tabButtons.forEach((element, i) => {
-          tabButtons[i].parentElement.classList.remove('active');
-        });
-
-        return this;
-      },
-
-
-      //Clear active tab content
-      clearTabContent: function() {
-        let tabContentElements = document.querySelectorAll('.tab-content div');
-        
-        tabContentElements.forEach((element, i) => {
-          tabContentElements[i].classList.remove('active');
-        });
-
-        return this;
-      },
-
-
-      //Update the tab contents based on tabValue
-      updateTabContent: function() {
-        this.clearTabContent();
-        document.querySelector('#' + tabValue).classList.add('active');
-
-        return this;
-      }
-
-  };
-
-
-  // Choose which tab to show first
-  // this is also used to build its sibbling tabs
-  // therefore we run this before we Instantiate the Tab Content
-  tabsModule.activateFirstTab({
-    id: "descTab",
-    dataClass: ".tmp-prod-details",
-    contentClass: ".descContent"
-
-  }).initTabContent();
-
-
-
-  //Add Tab Button Listeners
-  tabButtons.forEach( (element, i) => {  
-    if (!tabButtons[i].parentElement.classList.contains('innactive-tab')) {
-
-      tabButtons[i].addEventListener('click', function(event) {
-
-        if (!this.parentElement.classList.contains('active')) {
-          tabValue = this.dataset.tabval;
-
-          tabsModule.clearTabHeaders();
-          this.parentElement.classList.toggle('active');
-          tabsModule.updateTabContent();
-
-          event.preventDefault();
-        }
-      });
-    }
-  });
-
-
-  //Add Mobile Tab Button Listeners
-  mobileTabButtons.forEach( (element, j) => {
-    mobileTabButtons[j].addEventListener('click', function(event) {
-      let mobileContent = document.querySelector('.mobile-tab-wrapper' + ' #' + this.getAttribute("data-tabval"));
-     
-      mobileContent.classList.toggle('active');
-      event.preventDefault();
-    });
-  });
-
-
-}(document));
-
+<script type="application/ld+json">
+{
+    "provider_name": "AuthenTEAK",
+    "url": "//authenteak.com{{product.url}}",
+    "title": "{{this.product.title}}",
+    "description": "{{json product.description}}",
+    "product_id": "{{product.id}}",
+    "brand": "{{product.brand.name}}",
+    "price": "{{#block "jsonPrice"}}{{/block}}",
+    "currency_code": "{{product.price.without_tax.currency}}",
+    "availability": "in stock",
+    "images": [{{#forEach product.images}}
+      "{{getImage this 'product'}}"{{#unless isLast}},{{/unless}}{{/forEach}}
+    ],
+    "related_items": [{{#forEach product.related_products}}
+      "//authenteak.com{{url}}"{{#unless isLast}},{{/unless}}{{/forEach}}
+    ],
+    "color": [{{#forEach product.options}}{{#inArray (split "Select Head Cushion Fabric||Select Canopy||Select Optional Cushions||Select Optional Cushion||Select Fabric||Select Cushion||Select Throw Pillows Fabric" "||") display_name }}{{#forEach values}}{{#unless (occurrences label "No Thanks") }}{{#unless (occurrences label "No Cushion") }}
+        {
+          "name": "{{ trim (first (split label ' (+' )) }}",
+          "{{getImage image 'core-swatch'}}",
+          "map": ""
+        }{{#unless isLast}},{{/unless}}{{/unless}}{{/unless}}{{/forEach}}{{/inArray}}{{/forEach}}
+    ],
+    "geographic_availability": "US"
+}
 </script>
 
-{{> components/products/customizations/request-swatch-modal product}}
+<!-- end Pintrest Strucutred Data -->
+
+
+
+<script type="application/ld+json" id="productInfo">
+  {
+      "url": "{{product.url}}",
+      "title": "{{this.product.title}}",
+      "product_id": "{{product.id}}",
+      "brand": "{{product.brand.name}}",
+      "price": "{{#block "jsonPrice"}}{{/block}}",
+      "availability": "in stock",
+      "image": "{{getImage product.main_image 'product'}}"
+  }
+  </script>

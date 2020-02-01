@@ -5,8 +5,14 @@
   "accessToken": "dk2l4r767so2skfuexncnyh1ajf6xy2",
   "customLayouts": {
     "brand": {},
-    "category": {},
-    "page": {},
+    "category": {
+      "shop-all-brands.html": "/shop-all-brands/",
+      "collection.html": "/outdoor-furniture/shop-by-collection/kingsley-bate-sag-harbor-collection/"
+    },
+    "page": {
+      "test.html" : "/test-page/",
+      "warranties.html": "/warranties"
+    },
     "product": {}
   }
 }

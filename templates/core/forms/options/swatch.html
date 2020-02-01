@@ -1,26 +1,17 @@
 
 <div class="form-field form-field-options form-field-swatch{{#if required}} form-required{{/if}}" data-swatch-selector data-product-attribute="swatch">
-  <div class="form-field-title" data-option-title="{{display_name}}">
-    {{display_name}}: &nbsp;
+  <div class="form-field-title-cntr" data-option-title="{{display_name}}">
+    {{> core/forms/customizations/tooltip name=display_name type="swatch"}}
+
+    <span class="form-field-title">{{display_name}}:</span> &nbsp;
     <span class="swatch-value" data-swatch-value>{{lang 'forms.swatches_none_selected'}}</span>
     {{#if required}}<span class="required-text">{{lang 'common.required'}}</span>{{/if}}
-    
-    <div class="toolTip">
-      <a href="" title="About the {{display_name}} option" class="toolTip__iconCntr toolTip__iconCntr--dark" tool-tip-open rel="{{pascalcase display_name}}">
-        <svg class="toolTip__icon toolTip__icon--white" enable-background="new 0 0 20 20" version="1.1" viewBox="0 0 20 20" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
-          <title>tool tip</title>
-          <path d="M12.432 0c1.34 0 2.010 0.912 2.010 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-0.75-1.974-1.99 0-1.043 0.881-2.479 2.643-2.479zM8.309 20c-1.058 0-1.833-0.652-1.093-3.524l1.214-5.092c0.211-0.814 0.246-1.141 0-1.141-0.317 0-1.689 0.562-2.502 1.117l-0.528-0.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273 0.705 3.23l-1.391 5.352c-0.246 0.945-0.141 1.271 0.106 1.271 0.317 0 1.357-0.392 2.379-1.207l0.6 0.814c-2.502 2.547-5.235 3.527-6.291 3.527z"></path>
-        </svg>
-      </a>
-
-      <div class="toolTip__cntr hide" id="{{pascalcase display_name}}"></div>
-    </div><!-- /tool tip -->
     
   </div>
 
   <div class="form-field-control-wrapper"><div class="form-field-control" data-simplebar>
     {{#each values}}
-      <label class="swatch-wrap" data-swatch-value="{{label}}" data-product-attribute-value="{{id}}">
+      <label class="swatch-wrap" for="attribute-{{id}}" data-swatch-value="{{label}}" data-product-attribute-value="{{id}}">
         <input
           class="form-input swatch-radio"
           id="attribute-{{id}}"
@@ -68,7 +59,7 @@
       </label>
     {{/each}}
     {{#unless required}}
-      <label class="swatch-wrap swatch-none"  data-swatch-value="{{lang 'core.product.none'}}" data-product-attribute-value="{{id}}">
+      <label class="swatch-wrap swatch-none" for="attribute-{{id}}" data-swatch-value="{{lang 'core.product.none'}}" data-product-attribute-value="{{id}}">
         <span class="form-label-text">{{lang 'core.product.none'}}</span>
         <input
           class="form-input swatch-radio"
@@ -77,6 +68,7 @@
           value="0"
           {{#if prefill '==' 0}}checked{{/if}}
           aria-required="{{required}}"
+          id="attribute-{{id}}"
         >
         <span class="swatch">
           <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
