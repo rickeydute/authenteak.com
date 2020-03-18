@@ -477,8 +477,8 @@ TEAK.Modules.toolTip = {
 			${Object.keys(tabArr).map(key => {
 				return `<div class="toolTip__tab">
 							<input type="radio" class="toolTip__tabControl" id="toolTipTab_${key}" name="toolTipTabs" ${key === '0' ? 'checked' : '' }>
-							<label for="toolTipTab_${key}" class="toolTip__tabLabel">${tabArr[key].label}</label>
-							<div class="toolTip__tabContent" id="${tabArr[key].id}"></div>
+							<label for="toolTipTab_${key}" class="toolTip__tabLabel ${tabArr.length === 1 ? 'toolTip__tabLabel--hide' : ''}">${tabArr[key].label}</label>
+							<div class="toolTip__tabContent ${tabArr.length === 1 ? 'toolTip__tabContent--static' : ''}" id="${tabArr[key].id}"></div>
 						</div>`}).join("")}
 				</div>`;
 	},
@@ -647,10 +647,6 @@ TEAK.Modules.freeShipping = {
 			
 			shippingTabs = [
 					{
-						id: "free_white_glove_delivery",
-						label: "White Glove Delivery"
-					},
-					{
 						id: "threshold_delivery",
 						label: "First Threshold Delivery"
 					}
@@ -658,8 +654,8 @@ TEAK.Modules.freeShipping = {
 
 			freeWhiteGlove = 
 				`<p class="free-shipping-text" data-pricing-free-shipping>
-					<a href="" class="free-shipping-text--link" data-tool-tip-open data-tool-tip-type="element" data-tool-tip-name="free_white_glove_delivery, threshold_delivery" data-tool-tip-id="free_delivery">
-						<span>This item qualifies for free upgraded delivery</span> &nbsp;
+					<a href="" class="free-shipping-text--link" data-tool-tip-open data-tool-tip-type="element" data-tool-tip-name="threshold_delivery" data-tool-tip-id="free_delivery">
+						<span>This item qualifies for upgraded delivery</span> &nbsp;
 						<span class="toolTip__iconCntr toolTip__iconCntr--dark">
 							<svg class="toolTip__icon toolTip__icon--white" enable-background="new 0 0 20 20" version="1.1" viewBox="0 0 20 20" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
 								<title>tool tip</title>

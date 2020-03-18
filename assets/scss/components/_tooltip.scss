@@ -216,6 +216,10 @@
         border-bottom: 20px solid #fff;
         border-left: 1px solid #fff;
         z-index: 99;
+
+        &--hide{
+            display: none;
+        }
     }
 
     &__tabContent{
@@ -229,6 +233,10 @@
         height: 410px;
         width: 100%;
         overflow: auto;
+
+        &--static{
+            top: 0;
+        }
     }
 
 

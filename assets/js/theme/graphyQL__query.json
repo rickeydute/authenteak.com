@@ -1,0 +1,46 @@
+// gets specif product id or we can use this to limt a product 
+
+query{
+    site{
+      products(entityIds:6310){
+        edges{
+          node{
+            entityId
+            name
+            path
+            sku
+            options{
+              edges{
+                node{
+                  displayName
+                  isRequired
+                  values{
+                    edges{
+                      node{
+                        label
+                        entityId
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            
+            prices{
+              price{
+                value
+              }
+              retailPrice {
+                value
+                currencyCode
+              }
+            }
+            
+          }
+        }
+      }
+      
+    }
+  }
+  
+  
