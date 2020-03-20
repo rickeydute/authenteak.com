@@ -66201,7 +66201,21 @@ checkKeyToCloseModal:function checkKeyToCloseModal(e){if(TEAK.Modules.toolTip.ac
 	with_tax: parseInt('{{../../../product.price.with_tax.value}}'),
 	without_tax: parseInt('{{../../../product.price.without_tax.value}}'),
     custom: parseInt('{{~default ../../../product.price.sale_price_without_tax.value price.without_tax.value~}}')
-*/TEAK.Modules.freeShipping={set:function set(args,element){var excludedSkus=['LPG-L5000','EL-OFS006','EL-OFS005','EL-OFS014','EL-OFS302','EL-OFS303','EL-OFS304'],isExcluded=excludedSkus.includes(args.sku),freeShipping='<p class="free-shipping-text" data-pricing-free-shipping>Free Shipping</p></p>',shippingTabs=[{id:'threshold_delivery',label:'First Threshold Delivery'}],freeWhiteGlove='<p class="free-shipping-text" data-pricing-free-shipping>\n\t\t\t\t\t<a href="" class="free-shipping-text--link" data-tool-tip-open data-tool-tip-type="element" data-tool-tip-name="threshold_delivery" data-tool-tip-id="free_delivery">\n\t\t\t\t\t\t<span>This item qualifies for upgraded delivery</span> &nbsp;\n\t\t\t\t\t\t<span class="toolTip__iconCntr toolTip__iconCntr--dark">\n\t\t\t\t\t\t\t<svg class="toolTip__icon toolTip__icon--white" enable-background="new 0 0 20 20" version="1.1" viewBox="0 0 20 20" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">\n\t\t\t\t\t\t\t\t<title>tool tip</title>\n\t\t\t\t\t\t\t\t<path d="M12.432 0c1.34 0 2.010 0.912 2.010 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-0.75-1.974-1.99 0-1.043 0.881-2.479 2.643-2.479zM8.309 20c-1.058 0-1.833-0.652-1.093-3.524l1.214-5.092c0.211-0.814 0.246-1.141 0-1.141-0.317 0-1.689 0.562-2.502 1.117l-0.528-0.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273 0.705 3.23l-1.391 5.352c-0.246 0.945-0.141 1.271 0.106 1.271 0.317 0 1.357-0.392 2.379-1.207l0.6 0.814c-2.502 2.547-5.235 3.527-6.291 3.527z"></path>\n\t\t\t\t\t\t\t</svg>\n\t\t\t\t\t\t</span>\n\t\t\t\t\t</a>\n\t\t\t\t\t<div class="toolTip__cntr toolTip__cntr--withTabs hide" id="free_delivery">\n\t\t\t\t\t\t'+TEAK.Modules.toolTip.getTabs(shippingTabs)+'\n\t\t\t\t\t</div>\n\t\t\t\t</p>',tpl=(args.price.without_tax>2998||args.price.custom>2998)&&!isExcluded?freeWhiteGlove:freeShipping;document.getElementById(element).innerHTML=tpl;return this}};
+*/TEAK.Modules.freeShipping={set:function set(args,element){var excludedSkus=['LPG-L5000','EL-OFS006','EL-OFS005','EL-OFS014','EL-OFS302','EL-OFS303','EL-OFS304'],isExcluded=excludedSkus.includes(args.sku),freeShipping='<p class="free-shipping-text" data-pricing-free-shipping>Free Shipping</p></p>',shippingTabs=[{id:'threshold_delivery',label:'First Threshold Delivery'}],freeWhiteGlove='<p class="free-shipping-text" data-pricing-free-shipping>Free Shipping</p></p>',// `<p class="free-shipping-text" data-pricing-free-shipping>
+// 	<a href="" class="free-shipping-text--link" data-tool-tip-open data-tool-tip-type="element" data-tool-tip-name="threshold_delivery" data-tool-tip-id="free_delivery">
+// 		<span>Free Shipping</span> &nbsp;
+// 		<span class="toolTip__iconCntr toolTip__iconCntr--dark">
+// 			<svg class="toolTip__icon toolTip__icon--white" enable-background="new 0 0 20 20" version="1.1" viewBox="0 0 20 20" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+// 				<title>tool tip</title>
+// 				<path d="M12.432 0c1.34 0 2.010 0.912 2.010 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-0.75-1.974-1.99 0-1.043 0.881-2.479 2.643-2.479zM8.309 20c-1.058 0-1.833-0.652-1.093-3.524l1.214-5.092c0.211-0.814 0.246-1.141 0-1.141-0.317 0-1.689 0.562-2.502 1.117l-0.528-0.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273 0.705 3.23l-1.391 5.352c-0.246 0.945-0.141 1.271 0.106 1.271 0.317 0 1.357-0.392 2.379-1.207l0.6 0.814c-2.502 2.547-5.235 3.527-6.291 3.527z"></path>
+// 			</svg>
+// 		</span>
+// 	</a>
+// 	<div class="toolTip__cntr toolTip__cntr--withTabs hide" id="free_delivery">
+// 		${TEAK.Modules.toolTip.getTabs(shippingTabs)}
+// 	</div>
+// </p>`,
+tpl=(args.price.without_tax>2998||args.price.custom>2998)&&!isExcluded?freeWhiteGlove:freeShipping;document.getElementById(element).innerHTML=tpl;return this}};
 
 /***/ }),
 /* 466 */
