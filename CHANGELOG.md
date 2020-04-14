@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.20.22.001]
+- clyde integration
+
 ## [1.20.22]
 - collections page updaes
 - fixed pdp thunbial cut off issue
