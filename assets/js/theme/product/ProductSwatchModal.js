@@ -196,9 +196,9 @@ export default class ProductSwatchModal {
         this.$optionTriggerButton
             .find("input:radio")
                 .val(this.selectedSwatchObj.productAttributeValue)
-                .prop("selected", true)
+                .prop({ "selected": true, "checked": true })
                 .data("parsedLabel", this.selectedSwatchObj.text)
-                .attr({'checked': true, "id": `attribute[${this.selectedSwatchObj.productAttributeValue}]`})
+                .attr({"id": `attribute[${this.selectedSwatchObj.productAttributeValue}]`})
                     .end()
             .find(".product__swatchValue").addClass("show").text( this.selectedSwatchObj.text )
                 .end()
