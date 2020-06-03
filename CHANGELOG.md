@@ -43,6 +43,7 @@
 - added lead time tool tip to collections page
 - added tool tip for product options to collections page
 - added brand field to product graphql response 
+- fixed yotpo questions error url and product id association
 
 ## [1.20.24]
 - removed * from selectbox options

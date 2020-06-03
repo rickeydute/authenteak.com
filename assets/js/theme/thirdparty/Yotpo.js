@@ -50,12 +50,15 @@ export default class Yotpo {
 
             this.createBody = {
                 appkey: this.settings.key,
-                sku: this.settings.product.sku,
+                sku: this.settings.productId,
                 product_title: this.settings.product.title,
-                product_url: window.location.origin + this.settings.product.url,
+                product_url: window.location.href,
                 product_image_url: this.settings.product.image,
                 prevent_duplicate_review: true
             };
+
+            console.log(this.settings)
+            console.log(this.createBody)
 
             this.fetchToken().then(res => { this.createBody["utoken"] = res.access_token; });
             this.bindings();
