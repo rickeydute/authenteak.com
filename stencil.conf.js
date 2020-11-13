@@ -62,13 +62,13 @@ function development() {
  */
 function production() {
   webpackConfig.devtool = false;
-  webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    comments: false,
-    compress: {
-        warnings: true,
-    },
-    sourceMap: false, // Toggle to turn on source maps.
-  }));
+  // webpackConfig.plugins.push(new webpack.optimize.UglifyJsPlugin({
+  //   comments: false,
+  //   compress: {
+  //       warnings: true,
+  //   },
+  //   sourceMap: false, // Toggle to turn on source maps.
+  // }));
 
   webpack(webpackConfig).run(err => {
     if (err) {
@@ -102,6 +102,10 @@ if (process.send) {
  * @type {{files: string[], ignored: string[]}}
  */
 module.exports = {
+  optimization: {
+    minimize: true
+  },
+
   // If files in these directories change, reload the page.
   files: [
     '/templates',
