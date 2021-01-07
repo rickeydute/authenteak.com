@@ -27,6 +27,9 @@
 
 .breadcrumb:last-child {
     display: none;
+    @media only screen and (max-width: $screen-sm) {
+        display: inline-flex;
+    }
 }
 
 .breadcrumb:not(:nth-last-child)::after {
@@ -43,7 +46,7 @@
     }
 
     .breadcrumb:nth-last-of-type(2){
-        display: block;
+        display: inline-flex;
 
         a{
             display: block;
